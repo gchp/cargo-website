@@ -132,3 +132,39 @@ The available options are `dylib` and `staticlib`. You should only use
 this option in a project. Cargo will always compile **packages**
 (dependencies) based on the requirements of the project that includes
 them.
+
+# Projects Containing Both `lib` and `bin`
+
+Most projects will primarily produce either a library or an executable.
+Such projects should name the main crate file `<projectname>.rs` and
+omit the optional `path` from the `lib` or `bin` sections.
+
+Projects that contain both a library and one or more executables should
+generally use `<projectname>.rs` for their library, and `bin/*.rs`
+for the executables.
+
+These rules are also the default behavior if `path` is left off of `lib` or `bin` sections.
+
+## Example Manifests
+
+A project with both a lib and an executable:
+
+```toml
+[project]
+
+name = "skylight"
+version = "0.5.0"
+authors = ["Tom Dale <tom@tomdale.net>", "Carl Lerche <me@carllerche.com>"]
+
+[[lib]]
+
+name = "skylight" # path defaults to src/skylight.rs
+
+[[bin]]
+
+name = "skylight" # path defaults to src/bin/skylight.rs
+
+[[bin]]
+
+name = "skylight-setup" # path defaults to src/bin/skylight-setup.rs
+```
